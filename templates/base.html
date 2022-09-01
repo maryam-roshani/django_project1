@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<title></title>
+	<!--<link rel="stylesheet" type="text/css" href="{% static styles.css %}">-->
+</head>
+<body>
+
+	{% if messages %}
+	<ul class="messages">
+		{% for message in messages %}
+			<li>{{message}}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+
+
+	<nav>
+		<ul>
+			{% if user.is_authenticated %}
+				<li>
+					<form class="log_out" method="POST" action="{% url 'logout' %}">
+						{% csrf_token %}
+						<button type="submit"><a href="{% url 'logout' %}">Log OUT</a></button>
+						
+					</form>
+				</li>
+
+				<li><a href='{% url "rooms:create" %}'>A New Room</a></li>
+			{% else %}
+
+				<li><a href='{% url "login" %}'>Log In</a></li>
+				<li><a href='{% url "register" %}'>Sign Up</a></li>
+			
+			{% endif %}
+		</ul>
+	</nav>
+
+
+
+	{% block content %}
+	{% endblock %}
+
+</body>
+</html>

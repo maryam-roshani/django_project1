@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<style>
+	.room_container{
+		display: grid;
+		grid-template-columns: 3fr 1fr ;
+	}
+</style>
+
+
+
+<div  class='room_container'>
+	<div class='room'>
+		<div>
+			<span>@{{room.admin}}</span>
+			<hr>
+			<img src="{{topic.picture.url}}">
+			<h1>{{room.name}}</h1>
+			<h1>{{room.topic}}</h1>
+			<h3>{{topic.context}}</h3>
+			<p>THis room is created in {{room.created}} and changed in {{room.updated}}</p>
+
+		</div>
+
+		<div>
+			<h1>Conversations</h1>
+			<hr>
+			{% for message in messages %}
+			<div>
+				<small>@{{message.host}}   {{message.created|timesince}} ago</small>
+				{% if request.user == message.host %}
+					<a href='{% url "rooms:message-delete" message.id %}'>Delete</a>
+					<a href='{% url "rooms:message-edit" message.id %}'>Edit</a>
+				{% endif %}
+				<p>{{message.body}}</p>
+			</div>
+			{% endfor %}
+
+			<div>
+				<form method='post' action="">
+					{% csrf_token %}
+					<input type="text" name="body" placeholder='Write your messages Here...'>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="participants">
+		<h1>Participants</h1>
+		<hr>
+		{% for user in participants %}
+		<div>
+			<h3>@{{user.username}}</h3>
+		</div>
+		{% endfor %}
+	</div>
+
+</div>
+
+{% endblock %}
