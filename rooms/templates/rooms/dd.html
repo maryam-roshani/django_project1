@@ -1,0 +1,36 @@
+<div class="form__group">
+            <label for="book_topic">Book Topic</label>
+            <input required type="text" name="topic" list="topic-list"/>
+            <datalist id="topic-list">
+              <select id="room-topic">
+                <option value="Anna Karenina">Anna Karenina</option>
+                <option value="A Passage To India">A Passage To India</option>
+              </select>
+              
+            </datalist>
+          </div>
+          
+          <div class="form__group">
+            <label for="book_name">Book Name</label>
+            {{form.name}}
+          </div>
+
+          <div class="form__group">
+            <label for="book_authors">Book Author</label>
+            {{form.authors}}
+          </div>
+          
+          <div class="form__group">
+            <label for="book_name">Book Description</label>
+            {{form.context}}
+          </div>
+
+          <div class="form__group">
+            <label for="book_slug">Book Slug</label>
+            {{form.slug}}
+          </div>
+
+          <div class="form__group">
+            <label for="book_picture">Relevent Picture</label>
+            {{form.picture}}
+          </div>

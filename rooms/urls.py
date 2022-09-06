@@ -10,8 +10,11 @@ urlpatterns = [
 	url(r'^create/', views.create_view, name='create'),
 	url(r'^book-create/', views.book_create, name='book-create'),
     path('<str:pk>', views.room, name='room'),
+    path('profile/<str:pk>', views.userprofile, name='user-profile'),
     path('edit/<str:pk>', views.edit_view, name='edit'),
     path('delete/<str:pk>', views.delete_view, name='delete'),
     path('message-edit/<str:pk>', views.message_edit, name='message-edit'),
     path('message-delete/<str:pk>', views.message_delete, name='message-delete'),
+	url(r'^edit-user/$', views.editUser, name='edit-user'),
+
 ]

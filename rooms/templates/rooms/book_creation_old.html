@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<title></title>
+	<!--<link rel="stylesheet" type="text/css" href="{% static styles.css %}">-->
+</head>
+<body>
+
+<br>
+<div class="book_creation">
+	<form class='site-form' action="{% url 'rooms:book-create' %}" method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		{{ form }}
+		<input type="submit" value="Create">
+	</form>
+</div>
+
+
+</body>
+</html>
+
+
+

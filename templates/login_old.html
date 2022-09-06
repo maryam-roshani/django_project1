@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<title></title>
+	<!--<link rel="stylesheet" type="text/css" href="{% static styles.css %}">-->
+</head>
+<body>
+
+
+{% if Page == 'login' %}
+	<div>
+		<form method="post" >
+			{% csrf_token %}
+			
+			<label>UserName: </label>
+			<input type="text" name="username" placeholder="Enter Your username ">
+
+			<label>PassWord: </label>
+			<input type="password" name="password" placeholder="Enter Your password ">
+
+			{% if request.GET.next %}
+				<input type="hidden" name="next" value="{{ request.GET.next }}">
+			{% endif %}
+
+			<input type="submit" value="Log In">
+
+			<p><a href='{% url "register" %}'>Haven't Signed Up yet?</a></p>
+		</form>
+	</div>
+
+{% else %}
+
+	<div>
+		<form method="post" >
+			{% csrf_token %}
+			{{ form.as_p }}
+
+			<input type="submit" value="Sign Up">
+
+			<p><a href='{% url "login" %}'>Already Signed Up?</a></p>
+		</form>
+	</div>
+
+{% endif %}
+
+</body>
+</html>
+
+
+

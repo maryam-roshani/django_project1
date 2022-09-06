@@ -7,7 +7,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
 
-
 def login_view(request):
 	if request.user.is_authenticated :
 		return redirect('rooms:rooms')
@@ -16,19 +15,19 @@ def login_view(request):
 		if request.method == 'POST':
 			username = request.POST["username"]
 			password = request.POST["password"]
-			
+
 			try:
 				user = User.objects.get(username=username)
 			except:
 				messages.error(request, 'The username does not exists')
 
-			else:	
+			else:
 				user = authenticate(request, username=username, password=password)
-						
+
 				if user is not None :
 					login(request, user)
 					if 'next' in request.POST:
-						return redirect(request.POST.get('next'))	
+						return redirect(request.POST.get('next'))
 					else:
 						return redirect('rooms:rooms')
 				else :

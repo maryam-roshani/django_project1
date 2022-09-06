@@ -12,7 +12,7 @@ from rooms import views as room_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^$', room_views.rooms),
+    url(r'^$', room_views.rooms, name='home'),
     url(r'^login/$', views.login_view, name='login'),
     url(r'^register/$', views.register_view, name='register'),
     url(r'^logout/$', views.logout_view, name='logout'),
@@ -22,5 +22,3 @@ urlpatterns = [
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += staticfiles_urlpatterns()
-
-
