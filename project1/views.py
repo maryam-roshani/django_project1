@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import login, logout
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
-from django.contrib.auth.models import User
+from rooms.models import User
 from django.contrib.auth import authenticate, login, logout
+from rooms.forms import MyUserCreationForm
 
 
 def login_view(request):
@@ -13,18 +14,22 @@ def login_view(request):
 	else:
 		Page = 'login'
 		if request.method == 'POST':
-			username = request.POST["username"]
+			email = request.POST["email"]
 			password = request.POST["password"]
 
 			try:
-				user = User.objects.get(username=username)
+				user = User.objects.get(email=email)
+				# print(user.email)
+				# print(user.id)
 			except:
-				messages.error(request, 'The username does not exists')
+				messages.error(request, 'The email does not exists')
 
 			else:
-				user = authenticate(request, username=username, password=password)
+				user = authenticate(request, email=email, password=password)
+
 
 				if user is not None :
+					# print('hello')
 					login(request, user)
 					if 'next' in request.POST:
 						return redirect(request.POST.get('next'))
@@ -38,12 +43,14 @@ def login_view(request):
 
 def register_view(request):
 	if request.method == 'POST':
-		form = UserCreationForm( request.POST)
+		form = MyUserCreationForm(request.POST)
 		if form.is_valid():
-			user = form.save()
+			user = form.save(commit=False)
+			user.username = user.username.lower()
+			user.save()
 			login(request, user)
 			return redirect('rooms:rooms')
-	form = UserCreationForm()
+	form = MyUserCreationForm()
 	context = {'form':form}
 	return render(request, 'login.html', context )
 

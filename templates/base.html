@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="{% static 'styles/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/fontawesome/css/all.css' %}" >
     <title>StudyBuddy - Find study partners around the world!</title>
   </head>
 
@@ -36,7 +37,7 @@
           <div class="header__user">
             <a href="{% url 'rooms:edit-user' %}">
               <div class="avatar avatar--medium active">
-                <img src="https://randomuser.me/api/portraits/men/37.jpg" />
+                <img src="{{ request.user.avatar.url }}" />
               </div>
               <p>{{ request.user.username }}<span>@{{ request.user.username }}</span></p>
             </a>

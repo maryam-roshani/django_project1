@@ -2,6 +2,7 @@
 
 
 {% block content %}
+{% load static %}
 
 <style>
 	.room_container{
@@ -15,11 +16,11 @@
 <div  class='room_container'>
 	<div class='room'>
 		<div>
-			<span>@{{room.admin}}</span>
+			<span>@{{room.admin.username}}</span>
 			<hr>
 			<h1>{{room.name}}</h1>
-			<h1>{{room.topic}}</h1>
-			<h3>{{topic.context}}</h3>
+			<a href='{% url "rooms:book" room.id %}'><h1>{{room.topic}}</h1></a>
+			<h3>{{topic.snip}}</h3>
 			<p>THis room is created in {{room.created}} and changed in {{room.updated}}</p>
 
 		</div>
@@ -27,16 +28,45 @@
 		<div>
 			<h1>Conversations</h1>
 			<hr>
-			{% for message in room_messages %}
 			<div>
-				<small>@{{message.host}}   {{message.created|timesince}} ago</small>
-				{% if request.user == message.host %}
-					<a href='{% url "rooms:message-delete" message.id %}'>Delete</a>
-					<a href='{% url "rooms:message-edit" message.id %}'>Edit</a>
-				{% endif %}
-				<p>{{message.body}}</p>
+				{% for message in room_messages %}
+				<div>
+					<small>@{{message.host.username}}   {{message.created|timesince}} ago</small>
+					{% if request.user == message.host %}
+						<a href='{% url "rooms:message-delete" message.id %}'>Delete</a>
+						<a href='{% url "rooms:message-edit" message.id %}'>Edit</a>
+					{% endif %}
+					<p>{{message.body}}</p>
+					<a href='{% url "rooms:create-comment" message.id %}'><button>reply</button></a>
+					{% if message.like %}
+						<a href='{% url "rooms:message-like" message.id %}'><i class="fas fa-heart" style="font-size: 48px;color:red;border:none"></i></a>
+					{% else %}
+						<a href='{% url "rooms:message-like" message.id %}'><i class="fas fa-heart" style="font-size: 48px;color:white"></i></a>
+						<!-- <a href='{% url "rooms:message-like" message.id %}'><input type="image" src="{% static '/images/white_like.ico' %}"></a> -->
+					{% endif %}
+					<hr><br>
+				</div>
+				{% endfor %}
 			</div>
-			{% endfor %}
+
+			<div>
+				{% for comment in message_comments %}
+				<div>
+					<small>@{{comment.owner.username}}   {{comment.created|timesince}} ago</small>
+					{% if request.user == comment.owner %}
+						<a href='{% url "rooms:comment-delete" comment.id %}'>Delete</a>
+						<a href='{% url "rooms:comment-edit" comment.id %}'>Edit</a>
+					{% endif %}
+					<p>@{{comment.message.host.username}}  {{comment.body}}</p>
+					{% if comment.like %}
+						<a href='{% url "rooms:comment-like" comment.id %}'><input type="image" src="{% static '/images/red_like.ico' %}"></a>
+					{% else %}
+						<a href='{% url "rooms:comment-like" comment.id %}'><input type="image" src="{% static '/images/white_like.ico' %}"></a>
+					{% endif %}
+					
+				</div>
+				{% endfor %}
+			</div>
 
 			<div>
 				<form method='post' action="">

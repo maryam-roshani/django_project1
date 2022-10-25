@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>Pure CSS Star Rating</title>
+	<!-- <script src="https://kit.fontawesome.com/69ab750741.js" crossorigin="anonymous"></script> -->
+	<link rel="stylesheet" href="{% static 'styles/styles2.css' %}"/>
+	<link rel="stylesheet" href="{% static 'styles/fontawesome/css/all.css' %}" >
+	
+
+</head>
+<body>
+	<div class="container">	
+		<div class="star-widget">
+			<form method="POST" action='' >
+				{% csrf_token %}
+				<input type="radio" name="star" id="star5" value="5"><label for="star5" class="fas fa-star"></label>
+				<input type="radio" name="star" id="star4" value="4"><label for="star4" class="fas fa-star"></label>
+				<input type="radio" name="star" id="star3" value="3"><label for="star3" class="fas fa-star"></label>
+				<input type="radio" name="star" id="star2" value="2"><label for="star2" class="fas fa-star"></label>
+				<input type="radio" name="star" id="star1" value="1"><label for="star1" class="fas fa-star"></label>
+				<button type="submit" id="submit">Creation Completed!</button>
+			</form>
+		</div>
+		<div>
+			
+				
+				<!-- <input type="hidden" name="rate"> -->
+				
+		</div>
+	</div>
+<!-- 
+	<script src="{% static 'js/script2.js' %}"></script>! -->
+</body>
+</html>

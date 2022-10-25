@@ -7,10 +7,10 @@
 		<div class="activities__boxHeader roomListRoom__header">
 			<a href="{% url 'rooms:user-profile' message.host.id %} " class="roomListRoom__author">
 				<div class="avatar avatar--small">
-					<img src="https://randomuser.me/api/portraits/women/11.jpg" />
+					<img src="{{message.host.avatar.url}}" />
 				</div>
 				<p>
-					@{{message.host}}
+					@{{message.host.username}}
 					<span>{{message.created|timesince}} ago</span>
 				</p>
 			</a>
