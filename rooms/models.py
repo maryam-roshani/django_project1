@@ -165,3 +165,4 @@ class BookRating(models.Model):
 	date_created = models.DateTimeField(auto_now_add=True)
 	book = models.ForeignKey(Book, on_delete=models.CASCADE)
 
+

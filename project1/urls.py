@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'^register/$', views.register_view, name='register'),
     url(r'^logout/$', views.logout_view, name='logout'),
     url(r'^rooms/', include('rooms.urls')),
+    path('music/', include('music.urls')),
 	]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

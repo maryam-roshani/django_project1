@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     
     'django.contrib.sites',
     'rooms',
+    'music',
 ]
 
 AUTH_USER_MODEL = 'rooms.User'
