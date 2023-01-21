@@ -1,8 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import User
+from rooms.models import User
+import datetime
+from django.utils.translation import gettext as _
 
 
 # Create your models here.
+
+def year_choices():
+    return [(r,r) for r in range(1964, datetime.date.today().year+1)]
+
+def current_year():
+    return datetime.date.today().year
+
+
 class Song(models.Model):
 
     Language_Choice = (
@@ -10,11 +21,13 @@ class Song(models.Model):
               ('English', 'English'),
           )
 
+
+
     name = models.CharField(max_length=200)
     album = models.CharField(max_length=200)
     language = models.CharField(max_length=20,choices=Language_Choice,default='Persian')
-    song_img = models.FileField()
-    year = models.IntegerField()
+    song_img = models.FileField(null=True, blank=True)
+    year = models.IntegerField(_('year'), choices=year_choices(), default=current_year)
     singer = models.CharField(max_length=200)
     song_file = models.FileField()
 
@@ -38,3 +51,4 @@ class Favourite(models.Model):
 class Recent(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     song = models.ForeignKey(Song, on_delete=models.CASCADE)
+

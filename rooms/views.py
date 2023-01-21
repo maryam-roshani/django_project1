@@ -20,50 +20,26 @@ def rooms(request):
 	return render(request, 'rooms/rooms.html', context )
 
 
-def room(request, pk):
-	room = Room.objects.get(id=pk)
-	topic = room.topic
-	participants = room.participants.all()
-	room_messages = room.message_set.all()
-	message_comments = None
-	like = {}
-	for message in room_messages:
-		message_comments = message.comment_set.all()
-		for comment in message_comments:
-			bike = CommentLike.objects.filter(
-			Q(user = request.user) & 
-			Q(comment = comment)
-			)
-			comment.like = bool(bike)
-		like = MessageLike.objects.filter(
-		Q(user = request.user) & 
-		Q(message = message)
-		)
-		message.like = bool(like) 
-
-	if request.method == 'POST':
-		if request.user.is_authenticated:
-			message = Message.objects.create(
-				host=request.user,
-				room=room,
-				body=request.POST.get('body'))
-			participants = room.participants.add(request.user)
-			return redirect('rooms:room', pk=room.id)
-
-		else:
-			messages.error(request, 'you are not allowed to send any messages')
-			return render(request, 'login.html')
-	if like :
-		context = {'room' :room, 'room_messages':room_messages, 'message_comments':message_comments, 'like':like, 'participants':participants, 'topic':topic}
-	else:
-		context = {'room' :room, 'room_messages':room_messages, 'message_comments':message_comments, 'participants':participants, 'topic':topic}
-	return render(request, 'rooms/room_old.html', context )
-
 # def room(request, pk):
 # 	room = Room.objects.get(id=pk)
 # 	topic = room.topic
-# 	room_messages = room.message_set.all()
 # 	participants = room.participants.all()
+# 	room_messages = room.message_set.all()
+# 	message_comments = None
+# 	like = {}
+# 	for message in room_messages:
+# 		message_comments = message.comment_set.all()
+# 		for comment in message_comments:
+# 			bike = CommentLike.objects.filter(
+# 			Q(user = request.user) & 
+# 			Q(comment = comment)
+# 			)
+# 			comment.like = bool(bike)
+# 		like = MessageLike.objects.filter(
+# 		Q(user = request.user) & 
+# 		Q(message = message)
+# 		)
+# 		message.like = bool(like) 
 
 # 	if request.method == 'POST':
 # 		if request.user.is_authenticated:
@@ -73,12 +49,37 @@ def room(request, pk):
 # 				body=request.POST.get('body'))
 # 			participants = room.participants.add(request.user)
 # 			return redirect('rooms:room', pk=room.id)
-# 		else:
-# 			messages.error(request, 'you are not allowed to send message')
-# 			return render(request, 'login.html')
 
-# 	context = {'room' :room, 'room_messages':room_messages, 'participants':participants, 'topic':topic}
-# 	return render(request, 'rooms/room.html', context )
+# 		else:
+# 			messages.error(request, 'you are not allowed to send any messages')
+# 			return render(request, 'login.html')
+# 	if like :
+# 		context = {'room' :room, 'room_messages':room_messages, 'message_comments':message_comments, 'like':like, 'participants':participants, 'topic':topic}
+# 	else:
+# 		context = {'room' :room, 'room_messages':room_messages, 'message_comments':message_comments, 'participants':participants, 'topic':topic}
+# 	return render(request, 'rooms/room_old.html', context )
+
+
+def room(request, pk):
+	room = Room.objects.get(id=pk)
+	topic = room.topic
+	room_messages = room.message_set.all()
+	participants = room.participants.all()
+	name = room.name.upper()
+	if request.method == 'POST':
+		if request.user.is_authenticated:
+			message = Message.objects.create(
+				host=request.user,
+				room=room,
+				body=request.POST.get('body'))
+			participants = room.participants.add(request.user)
+			return redirect('rooms:room', pk=room.id)
+		else:
+			messages.error(request, 'you are not allowed to send message')
+			return render(request, 'login.html')
+
+	context = {'room' :room, 'room_messages':room_messages, 'participants':participants, 'topic':topic, 'name':name}
+	return render(request, 'rooms/room.html', context )
 
 
 

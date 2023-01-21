@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base2.html' %}
 {% load socialaccount %}
 {% block title %} Playlist {% endblock title %}
 {% block body %}
@@ -16,7 +16,7 @@
     {% for playlist in playlists %}
     <div class="col-md-3">
       <div class="thumbnail">
-        <a href="{% url 'playlist_songs' playlist.playlist_name %}">
+        <a href="{% url 'music:playlist_songs' playlist.playlist_name %}">
           <img src="{% static 'musicapp/images/bg.jpg' %}" class="img-responsive" height="200" width="200">
         </a>
         <center>

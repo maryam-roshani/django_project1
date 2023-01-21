@@ -317,6 +317,16 @@ a {
   color: var(--color-light);
 }
 
+.header__music svg {
+  color: var(--color-light);
+  fill: var(--color-light);
+  height: 25px;
+  width: 25px;
+  margin-left: 1rem;
+  border: none;
+  outline: none;
+}
+
 @media screen and (max-width: 800px) {
   .header__search input {
     width: 20rem;
@@ -1165,12 +1175,24 @@ a {
 }
 
 .book {
-  align-items: center;
   display: block;
+  margin-right: 150px;
+  margin-left: auto;
   justify-content: space-between;
+  background-position: center;
+  align-items: center;
+
 }
 
-.book .img-container img {
+
+.book-detail {
+  display: block;
+  margin-left: auto;
+  margin-right: auto; 
+}
+
+
+.book-detail .img-container img {
   height: 28vh;
   width: 28vh;
   color: transparent;
@@ -1179,8 +1201,8 @@ a {
   border-radius: 5vh;
   background-repeat: no-repeat;
   background-size: cover;
-  display: block;
   margin-left: auto;
   margin-right: auto; 
   margin-top: 2vh;
+  display: block;
 }

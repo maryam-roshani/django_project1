@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base2.html' %}
 {% load socialaccount %}
 {% block title %} Recently Played {% endblock title %}
 
@@ -41,9 +41,9 @@
         <img src="{{ song.song_img.url}}" class="img-responsive" height="135" width="135"
           style="border-radius: 8px 8px 8px 8px;">
         <div class="overlay">
-          <a class="btn btn-outline-light mt-5 mx-1" href="{% url 'play_recent_song' song.id %}"><i class="fa fa-play"
+          <a class="btn btn-outline-light mt-5 mx-1" href="{% url 'music:play_recent_song' song.id %}"><i class="fa fa-play"
               aria-hidden="true"></i></a>
-          <a class="btn btn-outline-light mt-5 mx-1" href="{% url 'detail' song.id %}"><i class="fa fa-info-circle"
+          <a class="btn btn-outline-light mt-5 mx-1" href="{% url 'music:detail' song.id %}"><i class="fa fa-info-circle"
               aria-hidden="true"></i></a>
         </div>
       </div>

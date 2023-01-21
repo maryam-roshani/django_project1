@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<div class="book">
+	<div class="book-detail">
 		<div class="img-container">
 			<img src="{{ book.picture.url }}" />
 		</div>
@@ -9,14 +9,14 @@
 		<p>{{ book.context}}</p>
 		<p>written by  ({{book.authors}})</p>
 	</div>
-	<div>
+	<div class="book">
 		<a href='{% url "rooms:book-rate" book.id %}'><button>Rate</button></a>
 	</div>
 	<div>
 		<!-- rooms:book/<str:pk>/pdf/ -->
 		<a href='{% url "rooms:show-pdf" book.id %}'>download pdf file</a>
 	</div>
-	<div>
+	<div class="book">
 		<input type="text" name="score" value='{{book.name}}   score:   {{book.rate}} of 5 ' size=100px>
 	</div>
 {% endblock %}

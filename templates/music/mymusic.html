@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base2.html' %}
 {% load socialaccount %}
 {% block title %} MusicApp - Home {% endblock title %}
 
@@ -17,18 +17,18 @@
 <br>
 
 <div class="container p-3 my-3 bg-primary text-white">
-    <a href="{% url 'playlist' %}">
+    <a href="{% url 'music:playlist' %}">
         <h1 style="color: antiquewhite;">Playlist</h1>
     </a>
-    <a href="{% url 'playlist' %}">
+    <a href="{% url 'music:playlist' %}">
         <p style="color: antiquewhite;">Browse through your created playlist here.</p>
     </a>
 </div>
 <div class="container p-3 my-3 bg-primary text-white">
-    <a href="{% url 'favourite' %}">
+    <a href="{% url 'music:favourite' %}">
         <h1 style="color: antiquewhite;">Favourites</h1>
     </a>
-    <a href="{% url 'favourite' %}">
+    <a href="{% url 'music:favourite' %}">
         <p style="color: antiquewhite;">Browse through your favourite songs here.</p>
     </a>
 </div>

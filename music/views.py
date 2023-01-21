@@ -57,7 +57,7 @@ def index(request):
         search_query = request.GET.get('q')
         filtered_songs = songs.filter(Q(name__icontains=search_query)).distinct()
         context = {'all_songs': filtered_songs,'last_played':last_played_song,'query_search':True}
-        return render(request, 'musicapp/index.html', context)
+        return render(request, 'music/index.html', context)
 
     context = {
         'all_songs':indexpage_songs,
@@ -68,7 +68,7 @@ def index(request):
         'first_time': first_time,
         'query_search':False,
     }
-    return render(request, 'musicapp/index.html', context=context)
+    return render(request, 'music/index.html', context=context)
 
 
 def persian_songs(request):
@@ -91,7 +91,7 @@ def persian_songs(request):
         return render(request, 'music/persian_songs.html', context)
 
     context = {'persian_songs':persian_songs,'last_played':last_played_song}
-    return render(request, 'musicapp/persian_songs.html',context=context)
+    return render(request, 'music/persian_songs.html',context=context)
 
 
 def english_songs(request):
@@ -111,10 +111,10 @@ def english_songs(request):
     if query:
         english_songs = Song.objects.filter(Q(name__icontains=query)).distinct()
         context = {'english_songs': english_songs}
-        return render(request, 'musicapp/english_songs.html', context)
+        return render(request, 'music/english_songs.html', context)
 
     context = {'english_songs':english_songs,'last_played':last_played_song}
-    return render(request, 'musicapp/english_songs.html',context=context)
+    return render(request, 'music/english_songs.html',context=context)
 
 @login_required(login_url='login')
 def play_song(request, song_id):
@@ -125,7 +125,7 @@ def play_song(request, song_id):
         data.delete()
     data = Recent(song=songs,user=request.user)
     data.save()
-    return redirect('all_songs')
+    return redirect('music:all_songs')
 
 
 @login_required(login_url='login')
@@ -137,7 +137,7 @@ def play_song_index(request, song_id):
         data.delete()
     data = Recent(song=songs,user=request.user)
     data.save()
-    return redirect('index')
+    return redirect('music:index')
 
 @login_required(login_url='login')
 def play_recent_song(request, song_id):
@@ -148,7 +148,7 @@ def play_recent_song(request, song_id):
         data.delete()
     data = Recent(song=songs,user=request.user)
     data.save()
-    return redirect('recent')
+    return redirect('music:recent')
 
 
 def all_songs(request):
@@ -185,7 +185,7 @@ def all_songs(request):
         'all_languages': all_languages,
         'query_search': True,
         }
-        return render(request, 'musicapp/all_songs.html', context)
+        return render(request, 'music/all_songs.html', context)
 
     context = {
         'songs': songs,
@@ -195,7 +195,7 @@ def all_songs(request):
         'all_languages': all_languages,
         'query_search' : False,
         }
-    return render(request, 'musicapp/all_songs.html', context=context)
+    return render(request, 'music/all_songs.html', context=context)
 
 
 def recent(request):
@@ -223,10 +223,10 @@ def recent(request):
         search_query = request.GET.get('q')
         filtered_songs = recent_songs_unsorted.filter(Q(name__icontains=search_query)).distinct()
         context = {'recent_songs': filtered_songs,'last_played':last_played_song,'query_search':True}
-        return render(request, 'musicapp/recent.html', context)
+        return render(request, 'music/recent.html', context)
 
     context = {'recent_songs':recent_songs,'last_played':last_played_song,'query_search':False}
-    return render(request, 'musicapp/recent.html', context=context)
+    return render(request, 'music/recent.html', context=context)
 
 
 @login_required(login_url='login')
@@ -264,7 +264,7 @@ def detail(request, song_id):
             print(f'query: {query}')
             query.save()
             messages.success(request, "Added to favorite!")
-            return redirect('detail', song_id=song_id)
+            return redirect('music:detail', song_id=song_id)
         elif 'rm-fav' in request.POST:
             is_fav = True
             query = Favourite.objects.filter(user=request.user, song=songs, is_fav=is_fav)
@@ -273,20 +273,20 @@ def detail(request, song_id):
             print(f'query: {query}')
             query.delete()
             messages.success(request, "Removed from favorite!")
-            return redirect('detail', song_id=song_id)
+            return redirect('music:detail', song_id=song_id)
 
     context = {'songs': songs, 'playlists': playlists, 'is_favourite': is_favourite,'last_played':last_played_song}
-    return render(request, 'musicapp/detail.html', context=context)
+    return render(request, 'music/detail.html', context=context)
 
 
 def mymusic(request):
-    return render(request, 'musicapp/mymusic.html')
+    return render(request, 'music/mymusic.html')
 
 
 def playlist(request):
     playlists = Playlist.objects.filter(user=request.user).values('playlist_name').distinct
     context = {'playlists': playlists}
-    return render(request, 'musicapp/playlist.html', context=context)
+    return render(request, 'music/playlist.html', context=context)
 
 
 def playlist_songs(request, playlist_name):
@@ -300,7 +300,7 @@ def playlist_songs(request, playlist_name):
 
     context = {'playlist_name': playlist_name, 'songs': songs}
 
-    return render(request, 'musicapp/playlist_songs.html', context=context)
+    return render(request, 'music/playlist_songs.html', context=context)
 
 
 def favourite(request):
@@ -313,4 +313,4 @@ def favourite(request):
         favourite_song.delete()
         messages.success(request, "Removed from favourite!")
     context = {'songs': songs}
-    return render(request, 'musicapp/favourite.html', context=context)
+    return render(request, 'music/favourite.html', context=context)

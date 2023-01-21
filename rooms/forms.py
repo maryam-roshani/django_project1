@@ -24,7 +24,7 @@ class MessageForm(ModelForm):
 class BookForm(ModelForm):
 	class Meta():
 		model = Book
-		fields = ['name', 'authors', 'context', 'slug', 'picture']
+		fields = ['name', 'authors', 'context', 'slug', 'picture', 'pdf']
 
 
 class UserForm(ModelForm):

@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base2.html' %}
 {% load socialaccount %}
 {% block title %} Favourites {% endblock title %}
 
@@ -41,7 +41,7 @@
     {% for song in songs %}
     <tr>
       <th scope="row">{{forloop.counter}}</th>
-      <td><a href="{% url 'detail' song.id %}">{{song.name}}</a></td>
+      <td><a href="{% url 'music:detail' song.id %}">{{song.name}}</a></td>
       <td>{{song.album}}</td>
       <td>{{song.singer}}</td>
       <td>
